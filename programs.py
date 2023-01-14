@@ -51,16 +51,11 @@ class Interface:
         money = finder.money()
         deka = finder.nrPrograms()
 
-        try:
-            getProgram = finder.getProgram(getter[0])
-        except:
-            return False
-
         count = 0
         for item in deka:
-            if item == 0 and int(money) >= getProgram[6]:
+            if item == 0:
                 netrunners.update_one({"_id": player}, {
-                    "$set": {"program"+str(count+1): getProgram[0]}})
+                    "$set": {"program"+str(count+1): getter[0]}})
                 return True
             else:
                 if count < 15:
@@ -103,3 +98,8 @@ class Interface:
             netrunners.update_one({"_id": self.uid}, {
                              "$set": {"lvl": gen_info[2] + 1}})
             return True
+
+    def deka(self, msg):
+        getter = msg.replace(' для ', ',').split(',')
+        netrunners.update_one({"name": getter[1]}, {
+            "$set": {"deka": getter[0]}})

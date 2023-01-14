@@ -1027,6 +1027,20 @@ async def cmd_armor(message: types.Message):
     else:
         await message.answer("У вас не вышло")
 
+@dp.message_handler(commands=['купить_деку'])
+async def cmd_armor(message: types.Message):
+    uid = message.from_user.id
+    msg = message.get_args()
+    find = Finder(uid)
+    deka = Interface(uid)
+    status = find.status()
+
+    if status[0] is True or status[1] is True:
+        deka.deka(msg)
+        await message.answer(f"Дека куплена")
+    else:
+        await message.answer("У вас не вышло")
+
 @dp.message_handler(commands=['нейролинк'])
 async def cmd_armor(message: types.Message):
     uid = message.from_user.id
