@@ -1195,10 +1195,24 @@ async def cmd_armor(message: types.Message):
     else:
         await message.answer("У вас не вышло")
 
+@dp.message_handler(commands=['аудио'])
+async def cmd_audio(message: types.Message):
+    uid = message.from_user.id
+    msg = message.get_args()
+    find = Finder(uid)
+    imp = Implants(uid)
+    status = find.status()
+
+    if status[0] is True or status[1] is True:
+        imp.audio(msg)
+        await message.answer(f"Имплант установлен")
+    else:
+        await message.answer("У вас не вышло")
+
 
 @dp.message_handler(commands=['get'])
 async def cmd_get(message: types.Message):
-   pass
+  pass
 
 @dp.message_handler()
 async def cmd_prof(message: types.Message):
