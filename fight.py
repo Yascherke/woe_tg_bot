@@ -20,12 +20,123 @@ def reloading(uid):
     magazine = find.magazine()
     ammo = find.ammo()
 
-    if magazine[0] < magazine[1]:
-        players.update_one({"_id": uid}, {
-            "$set": {"ammo": ammo[0] - 1}})
-        players.update_one({"_id": uid}, {
-            "$set": {"magazine": magazine[1]}})
-        return True
+    if ammo[13] == 'Стандартные':
+        if ammo[0] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo": ammo[0] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Бронебойные':
+        if ammo[1] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_bb": ammo[1] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Биотоксин':
+        if ammo[2] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_toxin": ammo[2] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'ЭМИ':
+        if ammo[3] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_emp": ammo[3] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Экспансивные':
+        if ammo[4] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_expansive": ammo[4] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Светошумовые':
+        if ammo[5] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_stun": ammo[5] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Зажигательные':
+        if ammo[6] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_fire": ammo[6] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Ядовитые':
+        if ammo[7] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_poison": ammo[7] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Резиновые':
+        if ammo[8] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_rubber": ammo[8] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Усыпляющие':
+        if ammo[9] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_sleep": ammo[9] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Умные':
+        if ammo[10] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_smart": ammo[10] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Дымовые':
+        if ammo[11] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_smoke": ammo[11] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
+    elif ammo[13] == 'Слезоточивый газ':
+        if ammo[12] != 0:
+            players.update_one({"_id": uid}, {
+                "$set": {"ammo_eye": ammo[12] - 1}})
+            players.update_one({"_id": uid}, {
+                "$set": {"magazine": magazine[1]}})
+            return True
+        else:
+            return False
     else:
         return False
 
