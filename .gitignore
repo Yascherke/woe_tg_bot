@@ -8,3 +8,4 @@ test.py
 poetry.lock
 pyproject.toml
 .replit
+replit.nix

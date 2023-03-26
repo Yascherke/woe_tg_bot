@@ -779,7 +779,7 @@ async def output_eq(message: types.Message):
     func = output(uid, msg)
 
     if func is True:
-        await message.answer(f"Вы избавились от предмета")
+        await message.answer(f"Вы cняли предмет")
     else:
         await message.answer("Слот пуст")
 
