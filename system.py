@@ -216,6 +216,7 @@ def output(uid, msg):
     find = Finder(uid)
     player_armor = find.equipment()
     player_wp = find.equipment()
+    player_bpack = find.backpack()
     msg = msg
 
     if msg == "Броню" or msg == "броню":
@@ -231,6 +232,15 @@ def output(uid, msg):
 
     if msg == "Оружие" or msg == "оружие":
         if player_wp[0] != 0:
+            count = 0
+            for item in player_bpack:
+                if item == 0:
+                    players.update_one({"_id": uid}, {"$set": {"slot"+str(count+1): player_wp[0]}})
+                else:
+                    if count < 15:
+                        count += 1
+                    else:
+                        return False
             players.update_one({"_id": uid}, {
                 "$set": {"weapon": 0}})
             players.update_one({"_id": uid}, {

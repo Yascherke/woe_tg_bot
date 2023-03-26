@@ -5,3 +5,6 @@ __pycache__
 storage.txt
 storage_programs.txt
 test.py
+poetry.lock
+pyproject.toml
+.replit

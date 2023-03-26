@@ -85,6 +85,7 @@ class Interface:
         gen_info = finder.getNRunner()
         
         ulvl = gen_info[2] + 1
+        print(ulvl)
         for lvl in lvls.find({"_id": ulvl}):
             print("Lvl finder done")
 

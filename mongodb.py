@@ -356,14 +356,7 @@ class Finder:
             nr['name'],
             nr['lvl'],
             nr['exp'],
-            nr["car1"],
-            nr["car2"],
-            nr["car3"],
-            nr["car4"],
-            nr["car_info1"],
-            nr["car_info2"],
-            nr["car_info3"],
-            nr["car_info4"],
+
         ]
 
     def ekzek(self):

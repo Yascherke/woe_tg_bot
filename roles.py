@@ -212,26 +212,38 @@ class Role:
         gen = finder.generalInfo()
         nr = Interface(self.uid)
 
-        if gen[1] == 'Рокербой':
+        if gen[1] == 1:
             self.rocker()
-        if gen[1] == 'Соло':
+            return True
+        elif gen[1] == 2:
             self.solo()
-        if gen[1] == 'Фиксер':
+            return True
+        elif gen[1] == 9:
             self.fixer()
-        if gen[1] == 'Медиа':
+            return True
+        elif gen[1] == 6:
             self.media()
-        if gen[1] == 'Экзек':
+            return True
+        elif gen[1] == 7:
             self.ekzek()
-        if gen[1] == 'Медтехник':
+            return True
+        elif gen[1] == 5:
             self.reaper()
-        if gen[1] == 'Техник':
+            return True
+        elif gen[1] == 4:
             self.tech()
-        if gen[1] == 'Кочевник':
+            return True
+        elif gen[1] == 10:
             self.nomad()
-        if gen[1] == 'Законник':
+            return True
+        elif gen[1] == 8:
             self.police()
-        if gen[1] == 'Нетраннер':
+            return True
+        elif gen[1] == 3:
             nr.lvlUp()
+            return True
+        else: 
+          return False
     
     
     def techPoint(self, msg):
