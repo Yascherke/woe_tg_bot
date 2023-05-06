@@ -2,9 +2,8 @@ from pymongo import MongoClient
 from mongodb import Finder
 from programs import Interface
 
-cluster = MongoClient(
-    "mongodb+srv://Nere:0662@woe.vj1q67r.mongodb.net/test"
-)
+cluster = MongoClient("mongodb+srv://Nere:0662@woe.vj1q67r.mongodb.net/test?ssl=true&ssl_cert_reqs=CERT_NONE",
+                      connect=False)
 db = cluster["WoE"]
 players = db["players"]
 roles = db["class"]
@@ -43,6 +42,7 @@ class Role:
             print("Lvl finder done")
 
         check = gen_info[3] - lvl['cost']
+        print(check)
 
         if gen_info[3] < lvl['cost'] or check < 0:
             return False
@@ -62,6 +62,7 @@ class Role:
             print("Lvl finder done")
 
         check = gen_info[3] - lvl['cost']
+        
 
         if gen_info[3] < lvl['cost'] or check < 0:
             return False
@@ -212,34 +213,34 @@ class Role:
         gen = finder.generalInfo()
         nr = Interface(self.uid)
 
-        if gen[1] == 1:
+        if gen[1] == 'Рокербой':
             self.rocker()
             return True
-        elif gen[1] == 2:
+        elif gen[1] == 'Соло':
             self.solo()
             return True
-        elif gen[1] == 9:
+        elif gen[1] == 'Фиксер':
             self.fixer()
             return True
-        elif gen[1] == 6:
+        elif gen[1] == 'Медиа':
             self.media()
             return True
-        elif gen[1] == 7:
+        elif gen[1] == 'Экзек':
             self.ekzek()
             return True
-        elif gen[1] == 5:
+        elif gen[1] == 'Медтехник':
             self.reaper()
             return True
-        elif gen[1] == 4:
+        elif gen[1] == 'Техник':
             self.tech()
             return True
-        elif gen[1] == 10:
+        elif gen[1] == 'Кочевник':
             self.nomad()
             return True
-        elif gen[1] == 8:
+        elif gen[1] == 'Законник':
             self.police()
             return True
-        elif gen[1] == 3:
+        elif gen[1] == 'Нетраннер':
             nr.lvlUp()
             return True
         else: 

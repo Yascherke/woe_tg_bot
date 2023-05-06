@@ -4,9 +4,8 @@ import d20
 import collections
 
 
-cluster = MongoClient(
-    "mongodb+srv://Nere:0662@woe.vj1q67r.mongodb.net/test"
-)
+cluster = MongoClient("mongodb+srv://Nere:0662@woe.vj1q67r.mongodb.net/test?ssl=true&ssl_cert_reqs=CERT_NONE",
+                      connect=False)
 db = cluster["WoE"]
 players = db["players"]
 roles = db["class"]

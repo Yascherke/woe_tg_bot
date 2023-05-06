@@ -1,8 +1,7 @@
 from pymongo import MongoClient
 
-cluster = MongoClient(
-    "mongodb+srv://Nere:0662@woe.vj1q67r.mongodb.net/test"
-)
+cluster = MongoClient("mongodb+srv://Nere:0662@woe.vj1q67r.mongodb.net/test?ssl=true&ssl_cert_reqs=CERT_NONE",
+                      connect=False)
 db = cluster["WoE"]
 players = db["players"]
 roles = db["class"]
@@ -45,7 +44,7 @@ class Finder:
     def generalInfo(self):
         for player in players.find({"_id": self.uid}):
             print('Done')
-        return [player['name'], player['hero_class'], player['rank'], player['rank_exp'], player['car'], player['home'], player['car_info']]
+        return [player['name'], player['role_name'], player['rank'], player['rank_exp'], player['car'], player['home'], player['car_info']]
 
     def hpInfo(self):
         for player in players.find({"_id": self.uid}):
