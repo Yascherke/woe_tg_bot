@@ -42,7 +42,6 @@ class Role:
             print("Lvl finder done")
 
         check = gen_info[3] - lvl['cost']
-        print(check)
 
         if gen_info[3] < lvl['cost'] or check < 0:
             return False
@@ -62,7 +61,6 @@ class Role:
             print("Lvl finder done")
 
         check = gen_info[3] - lvl['cost']
-        
 
         if gen_info[3] < lvl['cost'] or check < 0:
             return False
@@ -215,36 +213,24 @@ class Role:
 
         if gen[1] == 'Рокербой':
             self.rocker()
-            return True
-        elif gen[1] == 'Соло':
+        if gen[1] == 'Соло':
             self.solo()
-            return True
-        elif gen[1] == 'Фиксер':
+        if gen[1] == 'Фиксер':
             self.fixer()
-            return True
-        elif gen[1] == 'Медиа':
+        if gen[1] == 'Медиа':
             self.media()
-            return True
-        elif gen[1] == 'Экзек':
+        if gen[1] == 'Экзек':
             self.ekzek()
-            return True
-        elif gen[1] == 'Медтехник':
+        if gen[1] == 'Медтехник':
             self.reaper()
-            return True
-        elif gen[1] == 'Техник':
+        if gen[1] == 'Техник':
             self.tech()
-            return True
-        elif gen[1] == 'Кочевник':
+        if gen[1] == 'Кочевник':
             self.nomad()
-            return True
-        elif gen[1] == 'Законник':
+        if gen[1] == 'Законник':
             self.police()
-            return True
-        elif gen[1] == 'Нетраннер':
+        if gen[1] == 'Нетраннер':
             nr.lvlUp()
-            return True
-        else: 
-          return False
     
     
     def techPoint(self, msg):

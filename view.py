@@ -92,50 +92,27 @@ class View:
     def myEquip(self):
         finder = Finder(self.uid)
         equip = finder.equipment()
-        magazine = finder.magazine()
-        ammo = finder.ammo()
         
         mods = finder.weapMods()
       
         if equip[0] == 0:
             weap = "Отсутствует"
         else:
-            weapon = finder.weapon(equip[0])
-            weap = weapon[0]
+            weap = equip[0]
 
         text = f"""
 ------------------------------------------------
                     Экипировка
 
     Оружие: {weap}
-    Магазин: {magazine[0]} из {magazine[1]}
-    Тип боеприпасов: {ammo[13]}
 
     Обвесы:
-    Магазан: {mods[0]}
     Прицел: {mods[1]}
     Коннектор: {mods[3]}
     Насадка: {mods[2]}
 
     Защита: {equip[1]} | {equip[2]}
 
-
-    Количество магазинов:
-
-    Стандартные: {ammo[0]}
-    Бронебойные: {ammo[1]}
-    Биотоксин: {ammo[2]}
-    ЭМИ: {ammo[3]}
-    Экспансивные: {ammo[4]}
-    Светошумовые: {ammo[5]}
-    Зажигательные: {ammo[6]}
-    Ядовитые: {ammo[7]}
-    Резиновые: {ammo[8]}
-    Усыпляющие: {ammo[9]}
-    Умные: {ammo[10]}
-    Дымовые(гранаты): {ammo[11]}
-    Слезоточивый газ(гранаты): {ammo[12]}
-    Ракеты: {ammo[14]}
 ------------------------------------------------
         """
         return text

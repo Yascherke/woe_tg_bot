@@ -91,124 +91,6 @@ def bank_pl(uid, msg):
                            "money": player - money
                        }})
 
-def send_ammo(uid, msg):
-    getter = msg.replace(' для ', ',').split(',')
-    find = Finder(uid)
-    player2 = find.ammo()
-    player1 = find.ammoByName(getter[1])
-    before = int(player1[0])
-    before1 = int(player2[0])
-    money = int(getter[0])
-    players.update_one({"_id": uid}, {"$set": {"ammo": before1 - money}})
-    players.update_one({"name": getter[1]}, {
-                       "$set": {"ammo": before + money}})
-
-
-def buy_ammo(uid, msg):
-    getter = msg.replace(' тип ', ',').split(',')
-    find = Finder(uid)
-    player = find.ammo()
-    money = find.money()
-    before = int(money)
-    ammo = int(getter[0])
-    cost = 0
-
-    if getter[1] == 'Стандартные' or getter[1] == 'Резиновые':
-        cost = 10
-
-    if getter[1] == 'Бронебойные' or getter[1] == 'Экспансивные' or getter[1] == 'Светошумовые' or getter[1] == 'Зажигательные' or getter[1] == 'Ядовитые':
-        cost = 100
-
-    if getter[1] == 'Биотоксин' or getter[1] == 'ЭМИ' or getter[1] == 'Усыпляющие' or getter[1] == 'Умные':
-        cost = 500
-
-    if getter[1] == 'Дымовые' or getter[1] == 'Слезоточивые':
-        cost = 50
-
-    price = ammo * cost
-    res = before - price
-    print(res, before, cost, price)
-
-    if getter[1] == 'Стандартные' and res >= 0:
-        players.update_one({"_id": uid}, {"$set": {"ammo": player[0] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Бронебойные' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_bb": player[1] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Биотоксин' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_toxin": player[2] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'ЭМИ' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_emp": player[3] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Экспансивные' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_expansive": player[4] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Светошумовые' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_stun": player[5] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Зажигательные' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_fire": player[6] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Ядовитые' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_poison": player[7] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Резиновые' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_rubber": player[8] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Усыпляющие' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_sleep": player[9] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Умные' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_smart": player[10] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Дымовые' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_smoke": player[11] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    elif getter[1] == 'Слезоточивые' and res >= 0:
-        players.update_one(
-            {"_id": uid}, {"$set": {"ammo_eye": player[12] + ammo}})
-        players.update_one({"_id": uid}, {"$set": {"money": res}})
-        return True
-
-    else:
-        return False
-
 
 def output(uid, msg):
 
@@ -242,10 +124,6 @@ def output(uid, msg):
                         return False
             players.update_one({"_id": uid}, {
                 "$set": {"weapon": 0}})
-            players.update_one({"_id": uid}, {
-                "$set": {"max_magazine": 0}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": 0}})
             return True
         else:
             return False
@@ -281,7 +159,6 @@ def giveItem(uid, msg):
 
 
 def equip_wp(uid, msg):
-
     find = Finder(uid)
     slot = int(msg)
     owner = find.backpack()
@@ -289,19 +166,16 @@ def equip_wp(uid, msg):
     owner_item = owner[for_key]
     player_wp = find.equipment()
 
-    getWeapon = find.weapon(owner_item)
-
-
     if owner_item != 0 and player_wp[0] == 0:
 
         players.update_one({"_id": uid}, {
-            "$set": {"weapon": getWeapon[0]}})
-        players.update_one({"_id": uid}, {
-            "$set": {"max_magazine": getWeapon[1]}})
+            "$set": {"weapon": owner[slot-1]}})
         players.update_one({"_id": uid}, {
             "$set": {"slot"+str(slot): 0}})
+        print(owner[slot-1])
         return True
     else:
+        print(owner[slot-1])
         return False
 
 
@@ -338,16 +212,11 @@ def buyWp(uid, msg):
     getter = msg.replace(' для ', ',').split(',')
     player_bp = find.backpackByName(getter[1])
 
-    # try:
-    getWeapon = find.weapon(getter[0])
-    # except:
-    #     return False
-
     count = 0
     for item in player_bp:
         if item == 0:
             players.update_one({"name": getter[1]}, {
-                "$set": {"slot"+str(count+1): getWeapon[0]}})
+                "$set": {"slot"+str(count+1): getter[0]}})
             return True
         else:
             if count < 15:
@@ -375,156 +244,3 @@ def buyArmor(uid, msg):
                 count += 1
             else:
                 return False
-
-def changeAmmo(uid, msg):
-    find = Finder(uid)
-
-    magazine = find.magazine()
-    ammo = find.ammo()
-
-    if msg == 'Стандартные':
-        if ammo[0] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo": ammo[0] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Стандартные"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Бронебойные':
-        if ammo[1] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_bb": ammo[1] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Бронебойные"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Биотоксин':
-        if ammo[2] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_toxin": ammo[2] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Биотоксин"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'ЭМИ':
-        if ammo[3] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_emp": ammo[3] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "ЭМИ"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Экспансивные':
-        if ammo[4] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_expansive": ammo[4] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Экспансивные"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Светошумовые':
-        if ammo[5] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_stun": ammo[5] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Светошумовые"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Зажигательные':
-        if ammo[6] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_fire": ammo[6] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Зажигательные"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Ядовитые':
-        if ammo[7] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_poison": ammo[7] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Ядовитые"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Резиновые':
-        if ammo[8] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_rubber": ammo[8] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Резиновые"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Усыпляющие':
-        if ammo[9] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_sleep": ammo[9] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Усыпляющие"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Умные':
-        if ammo[10] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_smart": ammo[10] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Умные"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Дымовые':
-        if ammo[11] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_smoke": ammo[11] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Дымовые"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    elif msg == 'Слезоточивый газ':
-        if ammo[12] != 0:
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_eye": ammo[12] - 1}})
-            players.update_one({"_id": uid}, {
-                "$set": {"ammo_type": "Слезоточивый газ"}})
-            players.update_one({"_id": uid}, {
-                "$set": {"magazine": magazine[1]}})
-            return True
-        else:
-            return False
-    else:
-        return False
-    

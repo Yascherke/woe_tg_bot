@@ -19,7 +19,7 @@ from roles import Role
 from implants import Implants
 
 import markups as nav
-from system import getRole, getSkill, send_money, send_exp, bank_gm, output, buy_ammo, giveItem, equip_wp, equip_armor, buyWp, buyArmor, bank_pl, changeAmmo
+from system import getRole, getSkill, send_money, send_exp, bank_gm, output, giveItem, equip_wp, equip_armor, buyWp, buyArmor, bank_pl
 from fight import reloading, hit, getDamage, getHealth
 
 from ws import keep_alive
@@ -727,18 +727,6 @@ async def output_eq(message: types.Message):
     await message.answer("Слот пуст")
 
 
-@dp.message_handler(commands=['купить_патроны'])
-async def cmd_wp(message: types.Message):
-  uid = message.from_user.id
-  msg = message.get_args()
-  func = buy_ammo(uid, msg)
-
-  if func is True:
-    await message.answer(f"Вы купили патроны")
-  else:
-    await message.answer("У вас не вышло")
-
-
 @dp.message_handler(commands=['выдать_программу'])
 async def cmd_prog(message: types.Message):
   uid = message.from_user.id
@@ -761,8 +749,7 @@ async def cmd_prog(message: types.Message):
   msg = message.get_args()
   find = Finder(uid)
   status = find.status()
-  admin = Admin(uid)
-  func = admin.giveItem(msg)
+  func = buyWp(uid, msg)
 
   if status[0] != False or status[1] != False and func is True:
 
@@ -801,20 +788,6 @@ async def give(message: types.Message):
 
   if func is True:
     await message.answer(f"Вы передали {owner_item} в руки {getter[1]}")
-  else:
-    await message.answer("У вас не вышло")
-
-
-@dp.message_handler(commands=['купить_оружие'])
-async def cmd_wp(message: types.Message):
-  uid = message.from_user.id
-  msg = message.get_args()
-  func = buyWp(uid, msg)
-  find = Finder(uid)
-  status = find.status()
-
-  if func is True and status[0] is True or status[1] is True:
-    await message.answer(f"Вы купили оружие")
   else:
     await message.answer("У вас не вышло")
 
@@ -875,30 +848,6 @@ async def cmd_wp(message: types.Message):
   await message.answer(f"{name}: {dice}")
 
 
-@dp.message_handler(commands=['перезарядка'])
-async def give(message: types.Message):
-  uid = message.from_user.id
-  msg = message.get_args()
-  func = reloading(uid)
-
-  if func is True:
-    await message.answer(f"Вы успешно перезарядили оружие")
-  else:
-    await message.answer("У вас не вышло")
-
-
-@dp.message_handler(commands=['выстрел'])
-async def give(message: types.Message):
-  uid = message.from_user.id
-  msg = message.get_args()
-  func = hit(uid, msg)
-
-  if func is True:
-    await message.answer(f"Пуля потрачена")
-  else:
-    await message.answer("Магазин пуст")
-
-
 @dp.message_handler(commands=['вычесть'])
 async def give(message: types.Message):
   uid = message.from_user.id
@@ -947,18 +896,6 @@ async def cmd_hum(message: types.Message):
   if status[0] is True or status[1] is True:
     admin.humman(msg)
     await message.answer(f"Вы успешно лишили человечности")
-  else:
-    await message.answer("У вас не вышло")
-
-
-@dp.message_handler(commands=['сменить_патроны'])
-async def cmd_wp(message: types.Message):
-  uid = message.from_user.id
-  msg = message.get_args()
-  func = changeAmmo(uid, msg)
-
-  if func is True:
-    await message.answer(f"Вы сменили тип боепримасов на {msg}")
   else:
     await message.answer("У вас не вышло")
 

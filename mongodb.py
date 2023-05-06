@@ -141,31 +141,6 @@ class Finder:
             print('Done')
         return [house['name'], house['cost']]
 
-    def ammo(self):
-        for player in players.find({"_id": self.uid}):
-            print('Done')
-        return [
-            player['ammo'],
-            player['ammo_bb'],
-            player['ammo_toxin'],
-            player['ammo_emp'],
-            player['ammo_expansive'],
-            player['ammo_stun'],
-            player['ammo_fire'],
-            player['ammo_poison'],
-            player['ammo_rubber'],
-            player['ammo_sleep'],
-            player['ammo_smart'],
-            player['ammo_smoke'],
-            player['ammo_eye'],
-            player['ammo_type'],  # 13
-            player['rocket_ammo']]
-
-    def magazine(self):
-        for player in players.find({"_id": self.uid}):
-            print('Done')
-        return [player['magazine'], player['max_magazine']]
-
     def moneyByName(self, name):
         for player in players.find({"name": name}):
             print('Done')
@@ -203,26 +178,6 @@ class Finder:
             player['slot13'],
             player['slot14'],
             player['slot15'],
-        ]
-
-    def weapon(self, name):
-        for weapon in weapons.find({"name": name}):
-            print('Done')
-        return [
-            weapon['name'],
-            weapon['magazine'],
-            weapon['type'],
-            weapon['price']
-        ]
-    
-    def weaponId(self, wid):
-        for weapon in weapons.find({"_id": wid}):
-            print('Done')
-        return [
-            weapon['name'],
-            weapon['magazine'],
-            weapon['type'],
-            weapon['price']
         ]
 
     def armor(self, name):
